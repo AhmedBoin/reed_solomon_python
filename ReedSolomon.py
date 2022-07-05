@@ -33,8 +33,13 @@ def save_files(storage_data):
 def load_files():
     storage_data = []
     for i in range(255):
-        with open(f"coded_data/encoded_data{i}.code", "rb") as file:
-            storage_data.append(file.read())
+        try:
+            with open(f"coded_data/encoded_data{i}.code", "rb") as file:
+                storage_data.append(file.read())
+        except:
+            with open("log.txt" , "r") as file:
+                length = int(file.read())
+            storage_data.append(b'0'*(round(length / 51)+1))
     return storage_data
 
 def deinterleaver(storage_data):
